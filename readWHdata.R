@@ -1,9 +1,11 @@
-fn_script = "LDEF.R"
+fn_script = "readWHdata.R"
 # see what LDEF curves look like using CEC Appliance standards database
 
 # Jim Lutz "Fri Oct 14 11:14:55 2016"
 # "2016-10-15 15:35:19 PDT"   sudo R then install.packages
 # "Mon Oct 17 17:42:19 2016"  got git working
+# "Tue Oct 18 16:17:13 2016"  renamed this script, save data.table to Rdata file
+
 
 # make sure all packages loaded and start logging
 # at some point I should turn this into a common file 
@@ -12,11 +14,6 @@ source("setup.R")
 
 # set the working directory names 
 source("setup_wd.R")
-
-# load useful functions 
-# source("functions.R") 
-# not needed yet
-# source("plotfunctions.R") # add as needed
 
 # read the csv file from CEC Appliance standards data base
 DT_WHs <- fread(input= paste0(wd_data,"CEC Small Gas and Oil Htrs 2016-10-15.csv"))
@@ -48,8 +45,6 @@ DT_WHs <- DT_WHs[add_date>=DOE_2004]
 
 # keep only tanks > 20 gallons
 DT_WHs <- DT_WHs[vol>20]
-
-
 
 # Lutz, JD, CD Whitehead, AB Lekov, GJ Rosenquist, and DW Winiarski. 
 # “WHAM: Simplified Tool for Calculating Water Heater Energy Use.” In ASHRAE Transactions, 
@@ -86,7 +81,8 @@ qplot(data=DT_WHs,x=Pon) + geom_histogram()
 
 # RE
 summary(DT_WHs$RE)
-qplot(data=DT_WHs,x=RE) + geom_histogram()
+qplot(data=DT_WHs,x=RE) + geom_hiDT_WHs[EF<=.50] # large tanks
+stogram()
 DT_WHs[RE<=72] # probably OK
 
 # check EF
@@ -98,10 +94,13 @@ qplot(data = DT_WHs,x=vol,y=EF) # OK those are biggies
 # check UA
 summary(DT_WHs$UA)
 qplot(data=DT_WHs,x=UA) + geom_histogram()
+DT_WHs[UA>17] # large tanks
 
 # scatter plots
 ggpairs(DT_WHs, columns = c("vol","FHR","Pon","RE","EF","UA"), upper="blank")
 
+# save data.table
+save(DT_WHs , file=paste0(wd_data,"DT_WHs.RData"))
 
 
 
