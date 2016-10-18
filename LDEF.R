@@ -3,6 +3,7 @@ fn_script = "LDEF.R"
 
 # Jim Lutz "Fri Oct 14 11:14:55 2016"
 # "2016-10-15 15:35:19 PDT"   sudo R then install.packages
+# "Mon Oct 17 17:42:19 2016"  got git working
 
 # make sure all packages loaded and start logging
 # at some point I should turn this into a common file 
