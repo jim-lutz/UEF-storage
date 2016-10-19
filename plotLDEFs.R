@@ -49,6 +49,10 @@ DT_WHs_unique[,Qin_daily:=Qin(RE,UA,Pon)]
 # test Qin_daily
 DT_WHs_unique[1]
 
+with(DT_WHs_unique[1],{
+  Qin(RE,UA,Pon,test=TRUE)
+})
+
 Qout/Q_in
 DT_WHs_unique[1]$EF
 
