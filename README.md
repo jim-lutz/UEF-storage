@@ -35,3 +35,4 @@ Cp  =  0.9981
 > Qout/Q_in
 [1] 0.8294945
 
+/home/jiml/library/published/Lutz_WHAM.Simplified.Tool.for.Calculating.Water.Energy.Use.pdf

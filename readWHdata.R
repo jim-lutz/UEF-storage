@@ -5,6 +5,7 @@ fn_script = "readWHdata.R"
 # "2016-10-15 15:35:19 PDT"   sudo R then install.packages
 # "Mon Oct 17 17:42:19 2016"  got git working
 # "Tue Oct 18 16:17:13 2016"  renamed this script, save data.table to Rdata file
+# "2016-10-19 15:49:36 PDT"   match defaults to WHAM model Lutz.xls
 
 
 # make sure all packages loaded and start logging
@@ -37,8 +38,8 @@ summary(DT_WHs$`add_date`)
 qplot(data=DT_WHs,x=`add_date`) + geom_histogram()
 
 # DOE WH standards effective dates
-DOE_2004 = mdy("January 20, 2004")# 2001 rulemaking, https://www.gpo.gov/fdsys/pkg/FR-2001-01-17/pdf/01-1081.pdf#page=2
-DOE_2015 = mdy("April 16, 2015") # 2010 rulemaking, https://www.gpo.gov/fdsys/pkg/FR-2010-04-16/pdf/2010-7611.pdf#page=2
+DOE_2004 = mdy("January 20, 2004") # 2001 rulemaking, https://www.gpo.gov/fdsys/pkg/FR-2001-01-17/pdf/01-1081.pdf#page=2
+DOE_2015 = mdy("April 16, 2015")   # 2010 rulemaking, https://www.gpo.gov/fdsys/pkg/FR-2010-04-16/pdf/2010-7611.pdf#page=2
 
 # keep only after 2004 standard
 DT_WHs <- DT_WHs[add_date>=DOE_2004]
@@ -54,11 +55,14 @@ DT_WHs <- DT_WHs[vol>20]
 # use default assumptions for calculations
 # UA = (1/EF - 1/RE) / ( (Ttank - Tamb) * ( 24 / Qout - 1/(RE*Pon))) 
 # calculated at old EF test conditions.
-Tdelta = 67.5 
-Qout = 41904
+Tdelta = 135 - 67.5 
+Qout = 41092 
+
+# convert RE to fraction
+DT_WHs[,RE:=RE/100]
 
 # add UA to data.table
-DT_WHs[,UA:=(1/EF - 1/(RE/100)) / ( (Tdelta) * ( 24 / Qout - 1/(RE*Pon)))]
+DT_WHs[,UA:=(1/EF - 1/RE) / ( (Tdelta) * ( 24 / Qout - 1/(RE*Pon)))]
 
 # see what's in the database & remove nonsense records
 str(DT_WHs)
@@ -81,9 +85,8 @@ qplot(data=DT_WHs,x=Pon) + geom_histogram()
 
 # RE
 summary(DT_WHs$RE)
-qplot(data=DT_WHs,x=RE) + geom_hiDT_WHs[EF<=.50] # large tanks
-stogram()
-DT_WHs[RE<=72] # probably OK
+qplot(data=DT_WHs,x=RE) + geom_histogram() # large tanks
+DT_WHs[RE<=.72] # probably OK
 
 # check EF
 summary(DT_WHs$EF)
@@ -96,8 +99,8 @@ summary(DT_WHs$UA)
 qplot(data=DT_WHs,x=UA) + geom_histogram()
 DT_WHs[UA>17] # large tanks
 
-# scatter plots
-ggpairs(DT_WHs, columns = c("vol","FHR","Pon","RE","EF","UA"), upper="blank")
+# scatter plots, for verification
+# ggpairs(DT_WHs, columns = c("vol","FHR","Pon","RE","EF","UA"), upper="blank")
 
 # save data.table
 save(DT_WHs , file=paste0(wd_data,"DT_WHs.RData"))

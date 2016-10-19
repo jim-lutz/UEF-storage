@@ -19,7 +19,7 @@ DT_WHs_reduced <- DT_WHs[,list(vol,FHR,Pon,RE,EF,UA)]
 
 # build a unique identifier for base models
 str(DT_WHs_reduced)
-DT_WHs_reduced[,uid:= sprintf("%03d_%03d_%03.0f_%03d_%03.0f_%03d",vol,Pon/1000,EF*100,RE,UA*10,FHR)]
+DT_WHs_reduced[,uid:= sprintf("%03d_%03d_%03.0f_%03d_%03.0f_%03d",vol,Pon/1000,EF*100,RE*100,UA*10,FHR)]
 
 # sort by uid
 setkey(DT_WHs_reduced,uid)

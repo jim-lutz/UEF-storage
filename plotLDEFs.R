@@ -2,6 +2,7 @@ fn_script = "plotLDEFs.R"
 # plot LDEFs for unique 'base' models
 
 # Jim Lutz "2016-10-18 17:24:34 PDT"
+# "Wed Oct 19 15:29:59 2016"    find out why EF != Qout/Qin  
 
 # make sure all packages loaded and start logging
 # at some point I should turn this into a common file 
@@ -19,35 +20,34 @@ DT_WHs_unique
 # “WHAM: Simplified Tool for Calculating Water Heater Energy Use.” In ASHRAE Transactions, 
 # Vol. 105. Chicago, IL: Lawrence Berkeley National Lab., CA (US), 1999.
 
-Qin <- function(RE, UA, Pon, vol_daily, Ttank=135, Tin=58, Tamb=67.5, den=8.293, Cp=0.9981) {
+Qin <- function(RE, UA, Pon, vol_daily=64.3, Ttank=135, Tin=58, Tamb=67.5, den=8.2938, Cp=1.0007, test=FALSE) {
   # This is the WHAM eqn
   # RE, UA, Pon describe the water heater
-  # vol_daily is the daily hot water drawn
-  # den =  8.293 lb/gal at 96.5 °F
-  # Cp  =  0.9981 Btu/(lbm °F) at 96.5 °F
+  # vol_daily is the daily hot water drawn, default is test conditions
+  # default properties of water from 'WHAM model Lutz.xls'
+  # den =  8.2938	lb/gal		Density of water at average temperature.
+  # Cp  =  1.0007	Btu/lb-deg F		Specific heat of water at average temperature.
 
   Qin = (vol_daily * den * Cp * (Ttank - Tin))/RE * 
          ( 1 - (UA * (Ttank - Tamb))/Pon) 
          + 24 * UA * (Ttank - Tamb)
 
-  # testing
-  for(v in c("RE", "UA", "Pon", "vol_daily", "Ttank", "Tin", "Tamb", "den", "Cp")) {
-    cat(v," = ", get(v),"\n") 
+  # testing only
+  if (test) {
+    for(v in c("RE", "UA", "Pon", "vol_daily", "Ttank", "Tin", "Tamb", "den", "Cp")) {
+      cat(v," = ", get(v),"\n") 
+    }
   }
   
   
   return(Qin)
 }
 
-# test Qin
-# EF should equal Qout/Qin @ Qout = 41904 & vol_daily = 61.3
-RE = (DT_WHs_unique[1]$RE)/100 # convert to fraction
-UA = DT_WHs_unique[1]$UA
-Pon = DT_WHs_unique[1]$Pon
-vol_daily=61.3
-Qout = 41904
+# add Qin to data.table
+DT_WHs_unique[,Qin_daily:=Qin(RE,UA,Pon)]
 
-Q_in <- Qin(RE=RE,UA=UA,Pon=Pon,vol_daily = vol_daily)
+# test Qin_daily
+DT_WHs_unique[1]
 
 Qout/Q_in
 DT_WHs_unique[1]$EF
