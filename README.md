@@ -15,3 +15,23 @@ uniqueWH.R
     input:  DT_WHs.RData
     output: DT_WHs_unique.RData
 
+plotLDEFs.R
+WHAM equation not working. Check w/ spreadsheet
+RE  =  0.76 
+UA  =  7.691232 
+Pon  =  30000 
+vol_daily  =  61.3 
+Ttank  =  135 
+Tin  =  58 
+Tamb  =  67.5 
+den  =  8.293 
+Cp  =  0.9981 
+> Qout
+[1] 41904
+> Q_in
+[1] 50517.51
+> DT_WHs_unique[1]$EF
+[1] 0.62
+> Qout/Q_in
+[1] 0.8294945
+
