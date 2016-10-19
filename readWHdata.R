@@ -1,5 +1,5 @@
 fn_script = "readWHdata.R"
-# see what LDEF curves look like using CEC Appliance standards database
+# read water heater data from CEC Appliance standards database
 
 # Jim Lutz "Fri Oct 14 11:14:55 2016"
 # "2016-10-15 15:35:19 PDT"   sudo R then install.packages
