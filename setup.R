@@ -2,6 +2,7 @@
 # make sure any needed packages are loaded
 # Jim Lutz  "Fri Oct 14 11:21:53 2016"
 # "2016-10-15 15:35:19 PDT"   sudo R then update.packages(checkBuilt=TRUE) before running Rstudio
+# "Fri Apr  7 17:18:49 2017"  create list of packages and then one function to require and library them
 
 # make sure R and R studio are up to date first
 # https://cran.r-project.org/bin/linux/ubuntu/
