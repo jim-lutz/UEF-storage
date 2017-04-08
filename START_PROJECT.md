@@ -19,25 +19,16 @@ Generic instructions to myself for starting a new project.
 3) Make repository on GitHub
   https://github.com/
   
-4) Initialize git
-  cd /home/jiml/HotWaterResearch/projects/../***/scripts/
-  git init
-  
-5) Make sure local and remote repositories are connected
-  git remote -v
-  git remote set-url origin https://github.com/jim-lutz/***.git
-
-6) Edit some files then add, commit and push
-  git add *.R *.md
-  git commit -m "Message about setting up project"
-  git push
-  
-7) connect RStudio and GitHub?
+4) Connect to GitHub
   http://happygitwithr.com/push-pull-github.html
+
+5) Connect RStudio to Git and GitHub
+  http://happygitwithr.com/rstudio-git-github.html
+
+6) Copy over *.R and related files from a recent project.
+  Edit and modify as needed.
+
+7) Make local changes, save, commit
+  http://happygitwithr.com/rstudio-git-github.html#make-local-changes-save-commit
   
   
-  
-
-
-
-getting github connection to remember me
