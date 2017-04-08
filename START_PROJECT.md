@@ -40,3 +40,4 @@ Generic instructions to myself for starting a new project.
 
 
 
+getting github connection to remember me
