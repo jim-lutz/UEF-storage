@@ -39,4 +39,4 @@ Cp  =  0.9981
 [1] 0.8294945
 
 /home/jiml/library/published/Lutz_WHAM.Simplified.Tool.for.Calculating.Water.Energy.Use.pdf
-A line I wrote on my local computer
+
